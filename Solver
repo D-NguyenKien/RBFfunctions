@@ -1,0 +1,11 @@
+bcwt = mean(diag(K));  % used to keep the conditioning of the K matrix
+f = f-K(:,udofs)*uFixed;  % modify the force vector
+f = f-K(:,vdofs)*vFixed;
+K(udofs,:) = 0;
+K(vdofs,:) = 0;
+K(:,udofs) = 0;
+K(:,vdofs) = 0;
+K(udofs,udofs) = bcwt*speye(length(udofs)); 
+K(vdofs,vdofs) = bcwt*speye(length(vdofs));
+f(udofs) = bcwt*speye(length(udofs))*uFixed;
+f(vdofs) = bcwt*speye(length(udofs))*vFixed;
